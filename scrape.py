@@ -8,7 +8,7 @@ import pandas as pd
 link = 'https://play.google.com/store/apps/details?id=jp.eure.android.pairs&hl=ja&gl=US&showAllReviews=true'
 
 # how many scrolls we need
-scroll_cnt = 10
+scroll_cnt = 20
 
 # download chrome driver https://sites.google.com/a/chromium.org/chromedriver/home
 driver = webdriver.Chrome('./chromedriver')
@@ -28,7 +28,7 @@ for i in range(scroll_cnt):
     print('Cannot find load more button...')
 
 # get review containers
-reviews = driver.find_elements_by_xpath('//*[@jsname="fk8dgd"]//div[@class="xKpxId zc7KVe"]')
+reviews = driver.find_elements_by_xpath('//*[@jsname="fk8dgd"]//div[@class="d15Mdf bAhLNe"]')
 
 print('There are %d reviews avaliable!' % len(reviews))
 print('Writing the data...')
@@ -45,11 +45,11 @@ for review in reviews:
   name = soup.find(class_='X43Kjb').text
 
   # rating
-  ratings = int(soup.find('div', role='img').get('aria-label').replace('별표 5개 만점에', '').replace('개를 받았습니다.', '').strip())
+  ratings = int(soup.find('div', role='img').get('aria-label').replace('平均評価: 星 ', '').replace('/5 個', '').strip())
 
   # review date
   date = soup.find(class_='p2TkOb').text
-  date = datetime.strptime(date, '%Y년 %m월 %d일')
+  date = datetime.strptime(date, '%Y年%m月%d日')
   date = date.strftime('%Y-%m-%d')
 
   # helpful
