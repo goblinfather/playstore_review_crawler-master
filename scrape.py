@@ -8,7 +8,7 @@ import pandas as pd
 link = 'https://play.google.com/store/apps/details?id=jp.eure.android.pairs&hl=ja&gl=US&showAllReviews=true'
 
 # how many scrolls we need
-scroll_cnt = 20
+scroll_cnt = 16
 
 # download chrome driver https://sites.google.com/a/chromium.org/chromedriver/home
 driver = webdriver.Chrome('./chromedriver')
@@ -41,7 +41,7 @@ for review in reviews:
   # parse string to html using bs4
   soup = BeautifulSoup(review.get_attribute('innerHTML'), 'html.parser')
 
-  # reviewer  0128 여기까지
+  # reviewer 
   name = soup.find(class_='X43Kjb').text
 
   # rating
@@ -82,6 +82,6 @@ for review in reviews:
 filename = datetime.now().strftime('result/%Y-%m-%d_%H-%M-%S.csv')
 df.to_csv(filename, encoding='utf-8-sig', index=False)
 driver.stop_client()
-driver.close()
+# driver.close()
 
 print('Done!')
